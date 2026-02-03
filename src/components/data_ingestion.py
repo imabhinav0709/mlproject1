@@ -2,11 +2,20 @@ import os
 import sys
 import pandas as pd
 
+# Ensure project root parent is on sys.path when running this module directly
+# so the `src` package can be imported (we need the directory that contains `src`).
+src_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+repo_root = os.path.dirname(src_dir)
+if repo_root not in sys.path:
+    sys.path.append(repo_root)
+
 from src.exception import CustomException
 from src.logger import logging
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig
 @dataclass
 class DataIngestionConfig:
     train_data_path: str= os.path.join('artifacts','train.csv')
@@ -46,5 +55,7 @@ class DataIngestion:
 
 if __name__=='__main__':
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data,test_data = obj.initiate_data_ingestion()
 
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_tranformation(train_data, test_data)
