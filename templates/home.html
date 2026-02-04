@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,6 +76,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -197,6 +199,7 @@
                 opacity: 0;
                 transform: translateY(-10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -250,6 +253,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <a href="/" class="logo">📊 Student Performance Predictor</a>
@@ -333,18 +337,19 @@
         </form>
 
         {% if results %}
-            {% if results|string|slice(0, 5) == 'Error' %}
-                <div class="error">
-                    {{ results }}
-                </div>
-            {% else %}
-                <div class="result">
-                    <div class="result-label">Your Predicted Exam Score:</div>
-                    <div class="result-value">{{ results }}</div>
-                    <div class="result-unit">out of 100</div>
-                </div>
-            {% endif %}
+        {% if results|string|slice(0, 5) == 'Error' %}
+        <div class="error">
+            {{ results }}
+        </div>
+        {% else %}
+        <div class="result">
+            <div class="result-label">Your Predicted Exam Score:</div>
+            <div class="result-value">{{ results }}</div>
+            <div class="result-unit">out of 100</div>
+        </div>
+        {% endif %}
         {% endif %}
     </div>
 </body>
+
 </html>
