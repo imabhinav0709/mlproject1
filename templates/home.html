@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo:hover {
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2em;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95em;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 0.95em;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 0;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            grid-column: 1 / -1;
+            margin-top: 10px;
+        }
+
+        button,
+        .btn-back {
+            flex: 1;
+            padding: 14px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button[type="submit"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-back {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-back:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            text-align: center;
+            animation: slideIn 0.5s ease-in;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .result-unit {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .error {
+            color: #d32f2f;
+            padding: 15px;
+            background: #ffebee;
+            border-left: 4px solid #d32f2f;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/" class="logo">📊 Student Performance Predictor</a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/predict" class="nav-link">Predict</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Predict Your Performance</h2>
+        <p class="subtitle">Fill in your information to get an instant prediction of your exam performance</p>
+
+        <form action="/predict" method="POST">
+            <div>
+                <label>Gender</label>
+                <select name="gender" required>
+                    <option value="">Select your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Race or Ethnicity</label>
+                <select name="race_ethnicity" required>
+                    <option value="">Select Ethnicity</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Parental Level of Education</label>
+                <select name="parental_level_of_education" required>
+                    <option value="">Select Parent Education</option>
+                    <option value="some high school">Some High School</option>
+                    <option value="high school">High School</option>
+                    <option value="some college">Some College</option>
+                    <option value="associate's degree">Associate's Degree</option>
+                    <option value="bachelor's degree">Bachelor's Degree</option>
+                    <option value="master's degree">Master's Degree</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Lunch Type</label>
+                <select name="lunch" required>
+                    <option value="">Select Lunch Type</option>
+                    <option value="standard">Standard</option>
+                    <option value="free/reduced">Free / Reduced</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Test Preparation Course</label>
+                <select name="test_preparation_course" required>
+                    <option value="">Select Test Course</option>
+                    <option value="none">None</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Writing Score (out of 100)</label>
+                <input type="number" name="writing_score" min="0" max="100" required>
+            </div>
+
+            <div>
+                <label>Reading Score (out of 100)</label>
+                <input type="number" name="reading_score" min="0" max="100" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">🎯 Predict Performance</button>
+                <a href="/" class="btn-back">← Back Home</a>
+            </div>
+        </form>
+
+        {% if results %}
+            {% if results|string|slice(0, 5) == 'Error' %}
+                <div class="error">
+                    {{ results }}
+                </div>
+            {% else %}
+                <div class="result">
+                    <div class="result-label">Your Predicted Exam Score:</div>
+                    <div class="result-value">{{ results }}</div>
+                    <div class="result-unit">out of 100</div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
