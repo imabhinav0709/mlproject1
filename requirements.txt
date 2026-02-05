@@ -6,5 +6,6 @@ scikit-learn
 xgboost
 dill
 flask
+gunicorn
 #catboost
 #-e .
